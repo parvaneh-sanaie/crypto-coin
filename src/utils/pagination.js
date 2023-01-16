@@ -1,7 +1,7 @@
 const calculatePaginationRecords = ({ currentPage, maxDisplayPages, totalCount, size }) => {
     const array = [];
     const totalPages = Math.ceil(totalCount / size);
-    if (totalPages <= maxDisplayPages * size) {
+    if (totalPages <= maxDisplayPages) {
         for (let i = currentPage; i < currentPage + Math.ceil(totalPages / maxDisplayPages); i += 1) {
             array.push(i);
         }

@@ -56,6 +56,15 @@ describe('<CoinDetail />', () => {
             crudGetAllSuccess: false,
         };
     });
+
+    it('Should be match to the snapshot', () => {
+        let renderResult = null;
+        act(() => {
+            renderResult = render(<CoinDetail />);
+        });
+        expect(renderResult).toMatchSnapshot();
+    });
+
     it('Should render an empty page', () => {
         expect.assertions(1);
         act(() => {
@@ -85,8 +94,8 @@ describe('<CoinDetail />', () => {
         expect(screen.getByTestId('progressBar')).toBeInTheDocument();
     });
 
-    it('Should display coin name in TitleCard', () => {
-        expect.assertions(3);
+    it('Should display coin details in the page after page successfully loaded', () => {
+        expect.assertions(12);
         mockUseCrudGetReturnValue.crudGetOnePayload = { data: mockCoinDetail };
         mockUseCrudGetReturnValue.crudGetAllPayload = { data: mockTop10Markets };
         mockUseCrudGetReturnValue.crudGetOneSuccess = true;
@@ -95,22 +104,17 @@ describe('<CoinDetail />', () => {
             render(<CoinDetail />);
         });
         expect(screen.getByTestId('TitleCard')).toBeInTheDocument();
-        expect(screen.getByTestId('coin_name')).toBeInTheDocument();
-        expect(screen.getByText(mockCoinDetail.name)).toBeInTheDocument();
-    });
-
-    it('Should display coin symbol in TitleCard', () => {
-        expect.assertions(3);
-        mockUseCrudGetReturnValue.crudGetOnePayload = { data: mockCoinDetail };
-        mockUseCrudGetReturnValue.crudGetAllPayload = { data: mockTop10Markets };
-        mockUseCrudGetReturnValue.crudGetOneSuccess = true;
-        mockUseCrudGetReturnValue.crudGetAllSuccess = true;
-        act(() => {
-            render(<CoinDetail />);
-        });
-        expect(screen.getByTestId('TitleCard')).toBeInTheDocument();
-        expect(screen.getByTestId('coin_symbol')).toBeInTheDocument();
-        expect(screen.getAllByText(mockCoinDetail.symbol).length).toBeGreaterThanOrEqual(1);
+        expect(screen.getByTestId('coin_name').innerHTML).toContain(`${mockCoinDetail.name}`);
+        expect(screen.getByTestId('coin_symbol').innerHTML).toContain(`${mockCoinDetail.symbol}`);
+        expect(screen.getByTestId('coin_rank').innerHTML).toBe(`${mockCoinDetail.rank}`);
+        expect(screen.getByTestId('csupply').innerHTML).toContain(`${mockCoinDetail.csupply}`);
+        expect(screen.getByTestId('tsupply').innerHTML).toContain(`${mockCoinDetail.tsupply}`);
+        expect(screen.getByTestId('price_usd').innerHTML).toContain(`${mockCoinDetail.price_usd}`);
+        expect(screen.getByTestId('price_btc').innerHTML).toContain(`${mockCoinDetail.price_btc}`);
+        expect(screen.getByTestId('percent_change_1h').innerHTML).toContain(`${mockCoinDetail.percent_change_1h}`);
+        expect(screen.getByTestId('percent_change_24h').innerHTML).toContain(`${mockCoinDetail.percent_change_24h}`);
+        expect(screen.getByTestId('percent_change_7d').innerHTML).toContain(`${mockCoinDetail.percent_change_7d}`);
+        expect(screen.getByTestId('top10Markets')).toBeInTheDocument();
     });
 
     afterAll(cleanup);

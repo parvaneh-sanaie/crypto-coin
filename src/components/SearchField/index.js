@@ -11,11 +11,12 @@ function SearchField({ onSearch }) {
     };
     return (
         <form
-            data-testid="SearchField"
+            data-testid="search-field-form"
             className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
         >
             <div className="input-group">
                 <input
+                    data-testid="search-field-input"
                     value={value}
                     onChange={handleSearch}
                     className="form-control"
@@ -24,7 +25,12 @@ function SearchField({ onSearch }) {
                     aria-label="Search for..."
                     aria-describedby="btnNavbarSearch"
                 />
-                <button className="btn btn-primary" id="btnNavbarSearch" type="button">
+                <button
+                    data-testid="search-field-button"
+                    className="btn btn-primary"
+                    id="btnNavbarSearch"
+                    type="button"
+                >
                     <FontAwesomeIcon icon={faSearch} />
                 </button>
             </div>

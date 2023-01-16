@@ -45,7 +45,13 @@ function BarChart({ data, height, barConfig, tooltip, xAxisFormatterType, xAxisD
                     .map((pair) => {
                         const key = new Date().getMilliseconds() + Math.random();
                         return (
-                            <Bar key={key} stackId={pair[1].stack} background={{ fill: '#FFFFFF' }} maxBarSize={50} />
+                            <Bar
+                                dataKey={null}
+                                key={key}
+                                stackId={pair[1].stack}
+                                background={{ fill: '#FFFFFF' }}
+                                maxBarSize={50}
+                            />
                         );
                     })}
                 {_.toPairs(barConfig)

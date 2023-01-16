@@ -14,7 +14,7 @@ import { InjectReducer, InjectSaga } from '../../utils';
 import useCrudGet from '../../hooks/crud/get/useCrudGet';
 import { getCoinDetailSaga, getTop10MarketsForCoinSaga } from './saga';
 
-const todayGraphConfig = [
+const graphConfig = [
     {
         name: 'Volume',
         dataKey: 'volume',
@@ -106,8 +106,8 @@ function CoinDetail() {
                                 </div>
                             </div>
                             <div className="card row mt-4">
-                                <div className="card-body">
-                                    <table className="table-responsive table-sm">
+                                <div className="card-body table-responsive">
+                                    <table className="table table-sm">
                                         <thead>
                                             <tr>
                                                 <th>Market Cap</th>
@@ -126,8 +126,8 @@ function CoinDetail() {
                                                         <strong> {coinDetail.symbol}</strong>
                                                     </div>
                                                 </td>
-                                                <td>${coinDetail.csupply}</td>
-                                                <td>${coinDetail.tsupply}</td>
+                                                <td data-testid="csupply">${coinDetail.csupply}</td>
+                                                <td data-testid="tsupply">${coinDetail.tsupply}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -144,11 +144,13 @@ function CoinDetail() {
                                             <div className="list-group-flush">
                                                 <div className="list-group-item">
                                                     <span>USD: </span>
-                                                    <span className="text-primary small">${coinDetail.price_usd}</span>
+                                                    <span data-testid="price_usd" className="text-primary small">
+                                                        ${coinDetail.price_usd}
+                                                    </span>
                                                 </div>
                                                 <div className="list-group-item">
                                                     <span>BTC: </span>
-                                                    <span className="text-primary small">
+                                                    <span data-testid="price_btc" className="text-primary small">
                                                         {coinDetail.price_btc} <small>(BTC)</small>
                                                     </span>
                                                 </div>
@@ -170,6 +172,7 @@ function CoinDetail() {
                                             <tr>
                                                 <td>USD</td>
                                                 <td
+                                                    data-testid="percent_change_1h"
                                                     className={
                                                         coinDetail.percent_change_1h > 0
                                                             ? `text-success`
@@ -179,6 +182,7 @@ function CoinDetail() {
                                                     {coinDetail.percent_change_1h}%
                                                 </td>
                                                 <td
+                                                    data-testid="percent_change_24h"
                                                     className={
                                                         coinDetail.percent_change_24h > 0
                                                             ? `text-success`
@@ -188,6 +192,7 @@ function CoinDetail() {
                                                     {coinDetail.percent_change_24h}%
                                                 </td>
                                                 <td
+                                                    data-testid="percent_change_7d"
                                                     className={
                                                         coinDetail.percent_change_7d > 0
                                                             ? `text-success`
@@ -208,12 +213,12 @@ function CoinDetail() {
                                     <FontAwesomeIcon icon={faChartSimple} className="me-1" />
                                     Top 10 Markets for {coinDetail.name}({coinDetail.symbol})
                                 </div>
-                                <div className="card-body flex-row pt-4">
+                                <div data-testid="top10Markets" className="card-body flex-row pt-4">
                                     <BarChart
                                         width={600}
-                                        height={300}
+                                        height={268}
                                         data={top10Markets}
-                                        barConfig={todayGraphConfig}
+                                        barConfig={graphConfig}
                                         tooltip
                                         xAxisDataKey="name"
                                     />

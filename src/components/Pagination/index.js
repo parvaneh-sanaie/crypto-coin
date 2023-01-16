@@ -9,6 +9,7 @@ function Pagination(props) {
 
     const MAX_DISPLAY_PAGES = 6;
     const [page, setPage] = useState(currentPage);
+    const [pageSize, setPageSize] = useState(size);
     const [totalPages, setTotalPages] = useState(Math.floor(totalCount / size));
     const [displayPages, setDisplayPages] = useState(
         calculatePaginationRecords({ currentPage, maxDisplayPages: MAX_DISPLAY_PAGES, totalCount, size }),
@@ -16,9 +17,14 @@ function Pagination(props) {
 
     useEffect(() => {
         setDisplayPages(
-            calculatePaginationRecords({ currentPage, maxDisplayPages: MAX_DISPLAY_PAGES, totalCount, size }),
+            calculatePaginationRecords({
+                currentPage: page,
+                maxDisplayPages: MAX_DISPLAY_PAGES,
+                totalCount,
+                size: pageSize,
+            }),
         );
-    }, [totalCount, currentPage, size, totalPages]);
+    }, [totalCount, page, pageSize, totalPages]);
 
     const handlePageChange = (pageNumber) => {
         onPageChange(pageNumber);
@@ -38,23 +44,28 @@ function Pagination(props) {
     };
 
     const handleChangePageSize = (event) => {
-        const pageSize = event.target.value;
-        onPageSizeChange(Number(pageSize));
-        setTotalPages(Math.floor(totalCount / pageSize));
+        const newPageSize = Number(event.target.value);
+        onPageSizeChange(newPageSize);
+        setPageSize(newPageSize);
+        setTotalPages(Math.ceil(totalCount / newPageSize));
+        setPage(1);
     };
     return (
-        <div className={`container flex-fill ${className}`}>
+        <div data-testid="pagination" className={`container flex-fill ${className}`}>
             <div className="row">
                 <div className="col-xl-3 col-md-2 d-flex flex-fill justify-content-start">
-                    <label>
-                        {(currentPage - 1) * size + 1}-{totalCount < size ? totalCount : currentPage * size} of{' '}
+                    <label data-testid="pagination-page-info">
+                        {(page - 1) * pageSize + 1}-{totalCount < pageSize ? totalCount : page * pageSize} of{' '}
                         {totalCount}
                     </label>
                 </div>
                 <div className="col-xl-6 col-md-8 d-flex flex-fill justify-content-center">
                     <nav>
-                        <ul className="pagination">
-                            <li className={`page-item ${page <= 1 ? 'disabled' : ''}`}>
+                        <ul data-testid="pagination-page-list" className="pagination">
+                            <li
+                                data-testid="pagination-previous-link"
+                                className={`page-item ${page <= 1 ? 'disabled' : ''}`}
+                            >
                                 <button type="button" className="page-link" onClick={handleClickPreviousPage}>
                                     <span aria-hidden="true">&laquo;</span>
                                 </button>
@@ -63,7 +74,7 @@ function Pagination(props) {
                                 const key = new Date().getMilliseconds() + Math.random();
                                 return (
                                     <li className="page-item" key={`${key}`}>
-                                        {pageNumber !== currentPage && (
+                                        {pageNumber !== page && (
                                             <button
                                                 type="button"
                                                 className="page-link"
@@ -74,7 +85,7 @@ function Pagination(props) {
                                                 <span aria-hidden="true">{pageNumber}</span>
                                             </button>
                                         )}
-                                        {pageNumber === currentPage && (
+                                        {pageNumber === page && (
                                             <span key={`${key}${pageNumber}`} className="page-link active">
                                                 {pageNumber}
                                             </span>
@@ -82,7 +93,10 @@ function Pagination(props) {
                                     </li>
                                 );
                             })}
-                            <li className={`page-item ${page >= totalPages || totalCount < size ? 'disabled' : ''}`}>
+                            <li
+                                data-testid="pagination-next-link"
+                                className={`page-item ${page >= totalPages || totalCount < pageSize ? 'disabled' : ''}`}
+                            >
                                 <button type="button" className="page-link" onClick={handleClickNextPage}>
                                     <span aria-hidden="true">&raquo;</span>
                                 </button>
@@ -93,7 +107,11 @@ function Pagination(props) {
                 <div className="col-xl-3 col-md-2 d-flex flex-fill justify-content-end">
                     <label>
                         Rows per page:
-                        <select value={size} onChange={handleChangePageSize}>
+                        <select
+                            data-testid="pagination-page-size-records"
+                            value={pageSize}
+                            onChange={handleChangePageSize}
+                        >
                             <option value={5}>5</option>
                             <option value={10}>10</option>
                             <option value={20}>20</option>
@@ -107,7 +125,7 @@ function Pagination(props) {
     );
 }
 Pagination.propTypes = {
-    currentPage: PropTypes.number.isRequired,
+    currentPage: PropTypes.number,
     size: PropTypes.number,
     totalCount: PropTypes.number,
     onPageChange: PropTypes.func,
@@ -116,6 +134,7 @@ Pagination.propTypes = {
 };
 Pagination.defaultProps = {
     size: 10,
+    currentPage: 1,
     totalCount: 1,
     onPageChange: (pageNumber) => pageNumber,
     onPageSizeChange: (size) => size,

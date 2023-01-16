@@ -75,7 +75,7 @@ function CoinList() {
         <div data-testid="CoinList">
             <Header showProgress={crudGetListLoading} />
             {crudGetListSuccess && coinList && (
-                <div className="container-fluid py-2 px-4 small">
+                <div data-testid="page-container" className="container-fluid py-2 px-4 small">
                     <div className="card mb-2">
                         <div className="card-header">
                             <FontAwesomeIcon icon={faTable} className="me-1" />
@@ -84,7 +84,11 @@ function CoinList() {
                         <div className="text-end mt-1">
                             <SearchField onSearch={handleSearchInDataTable} />
                         </div>
-                        <div className="card-body table-responsive px-5 m-1" style={{ maxHeight: '600px' }}>
+                        <div
+                            data-testid="table-container"
+                            className="card-body table-responsive px-5 m-1"
+                            style={{ maxHeight: '300px' }}
+                        >
                             <table className="overflow-scroll table table-sm table-hover table-bordered table-striped">
                                 <thead>
                                     <tr>
@@ -97,7 +101,7 @@ function CoinList() {
                                         <th>Market Cap</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody data-testid="table-body">
                                     {coinList.map((item) => {
                                         const key = new Date().getMilliseconds() + Math.random();
                                         return (
