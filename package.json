@@ -15,10 +15,13 @@
     "immer": "^9.0.17",
     "invariant": "^2.2.4",
     "lodash": "^4.17.21",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
+    "react-router-dom": "^6.6.2",
     "react-scripts": "^5.0.1",
+    "recharts": "^2.3.2",
     "redux": "^4.2.0",
     "redux-saga": "^1.2.2",
     "reselect": "^4.1.7",
@@ -33,7 +36,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

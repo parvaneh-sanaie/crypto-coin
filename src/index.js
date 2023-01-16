@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom/client';
 
 import './index.css';
-import App from './containers/App/Loadable';
+import App from './containers/App';
 import reportWebVitals from './reportWebVitals';
 import configureStore from './configureStore';
 

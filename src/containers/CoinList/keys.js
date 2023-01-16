@@ -1,6 +1,7 @@
 const KEYS = {
     COINS: {
         LIST: `TICKERS`,
+        GLOBAL: `GLOBAL`,
     },
 };
 

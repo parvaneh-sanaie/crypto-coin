@@ -36,52 +36,64 @@ const crudGetReducer =
                 case `${GET.ONE.KEY}${key}`: {
                     draft.get.one.payload = action.payload;
                     draft.get.one.loading = true;
+                    draft.get.one.success = false;
+                    draft.get.one.failure = false;
                     break;
                 }
                 case `${GET.ALL.KEY}${key}`: {
                     draft.get.all.payload = action.payload;
                     draft.get.all.loading = true;
+                    draft.get.all.success = false;
+                    draft.get.all.failure = false;
                     break;
                 }
                 case `${GET.LIST.KEY}${key}`: {
                     draft.get.list.payload = action.payload;
                     draft.get.list.loading = true;
+                    draft.get.list.success = false;
+                    draft.get.list.failure = false;
                     break;
                 }
                 case `${GET.LIST.SUCCESS.KEY}${key}`: {
                     draft.get.list.payload = action.payload;
                     draft.get.list.success = true;
                     draft.get.list.loading = false;
+                    draft.get.list.failure = false;
                     break;
                 }
                 case `${GET.ONE.SUCCESS.KEY}${key}`: {
                     draft.get.one.payload = action.payload;
                     draft.get.one.success = true;
                     draft.get.one.loading = false;
+                    draft.get.one.failure = false;
                     break;
                 }
                 case `${GET.ALL.SUCCESS.KEY}${key}`: {
                     draft.get.all.payload = action.payload;
                     draft.get.all.success = true;
                     draft.get.all.loading = false;
+                    draft.get.all.failure = false;
                     break;
                 }
                 case `${GET.LIST.FAILURE.KEY}${key}`: {
                     draft.get.list.payload = action.payload;
                     draft.get.list.failure = true;
                     draft.get.list.loading = false;
+                    draft.get.list.success = false;
                     break;
                 }
                 case `${GET.ONE.FAILURE.KEY}${key}`: {
                     draft.get.one.payload = action.payload;
                     draft.get.one.failure = true;
                     draft.get.one.loading = false;
+                    draft.get.one.success = false;
                     break;
                 }
                 case `${GET.ALL.FAILURE.KEY}${key}`: {
                     draft.get.all.payload = action.payload;
                     draft.get.all.failure = true;
                     draft.get.all.loading = false;
+                    draft.get.all.success = false;
                     break;
                 }
                 case `${GET.RESET.KEY}${key}`: {

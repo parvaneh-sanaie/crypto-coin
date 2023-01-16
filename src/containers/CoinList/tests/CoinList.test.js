@@ -1,6 +1,6 @@
 import React from 'react';
 import { act, render, screen } from '@testing-library/react';
-import App from '../index';
+import CoinList from '../index';
 
 jest.mock('react-redux');
 jest.mock('../saga');
@@ -20,12 +20,12 @@ jest.mock('../../../utils', () => ({
 }));
 
 describe('<App />', () => {
-    it('should render an empty dev with data-testid="App"', () => {
+    it('should render an empty dev with data-testid="CoinList"', () => {
         expect.assertions(1);
         act(() => {
-            render(<App />);
+            render(<CoinList />);
         });
-        const input = screen.getByTestId('App');
-        expect(input).toBeInTheDocument();
+        const component = screen.getByTestId('CoinList');
+        expect(component).toBeInTheDocument();
     });
 });
